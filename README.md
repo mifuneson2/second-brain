@@ -10,10 +10,16 @@ You feed raw material (articles, papers, notes, transcripts) into a `raw/` folde
 
 The LLM is the librarian. You're the curator.
 
+## Prerequisites
+
+- **[Obsidian](https://obsidian.md)** — the markdown editor you'll browse your wiki in
+- **An AI coding agent** — [Claude Code](https://claude.ai/code), [Codex](https://openai.com/codex), [Cursor](https://cursor.com), [Gemini CLI](https://github.com/google-gemini/gemini-cli), or any agent that supports [Agent Skills](https://agentskills.io)
+- **[Node.js](https://nodejs.org)** — required for installing the skills via npm
+
 ## Install
 
 ```bash
-npx skills add <repo-url>
+npx skills add NicholasSpisak/second-brain
 ```
 
 This installs four skills into your AI agent (Claude Code, Codex, Cursor, Gemini CLI, and 40+ others):
@@ -28,10 +34,12 @@ This installs four skills into your AI agent (Claude Code, Codex, Cursor, Gemini
 ## Quick Start
 
 1. **Install the skills** (see above)
-2. **Run the wizard:** `/second-brain` — it walks you through setup
-3. **Install Web Clipper:** [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf) for saving articles to your vault
-4. **Open in Obsidian** — point Obsidian at your new vault folder
-5. **Clip an article** to `raw/`, then run `/second-brain-ingest`
+2. **Run the wizard:** type `/second-brain` in your AI agent — it walks you through naming, location, domain, and tooling
+3. **Install Web Clipper:** [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf) — configure it to save to your vault's `raw/` folder
+4. **Open in Obsidian** — launch Obsidian, choose "Open folder as vault", select your vault folder
+5. **Clip your first article** to `raw/`, then run `/second-brain-ingest` — the LLM will discuss key takeaways and build wiki pages
+6. **Browse your wiki** in Obsidian — follow `[[wikilinks]]`, explore the graph view, check `wiki/index.md`
+7. **Keep going** — `/second-brain-query` to ask questions, `/second-brain-lint` to health-check
 
 ## What You Get
 

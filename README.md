@@ -66,6 +66,32 @@ The wizard offers to install these. All optional but recommended:
 - **[qmd](https://github.com/tobi/qmd)** — local search engine for markdown files (useful as wiki grows)
 - **[agent-browser](https://github.com/vercel-labs/agent-browser)** — browser automation for web research
 
+## FAQ
+
+**The wizard failed or I need to re-run setup.**
+Run `/second-brain` again — the onboarding script is idempotent. It won't overwrite existing files, so your data is safe. If you need a fresh start, delete the vault folder and re-run.
+
+**I accidentally modified a file in `raw/`.**
+That's OK. The wiki was built from the original content. If you need the original back, check your git history (if the vault is a git repo) or re-clip the source. The wiki pages are unaffected.
+
+**`wiki/index.md` is out of sync with actual pages.**
+Run `/second-brain-lint` — it checks index consistency and offers to fix mismatches.
+
+**Wikilinks are broken after renaming a page.**
+Run `/second-brain-lint` — it scans for broken `[[wikilinks]]` and reports which files need updating.
+
+**The wiki is getting large and queries are slow.**
+Install `qmd` (`npm i -g @tobilu/qmd`). The query skill uses it automatically when available. It provides fast hybrid search across your wiki files.
+
+**Can I use this with multiple AI agents?**
+Yes. The wizard generates config files for each agent you select. They all follow the same wiki schema, so multiple agents can work on the same vault.
+
+**How do I handle images in clipped articles?**
+In Obsidian, set Settings → Files and links → Attachment folder path to `raw/assets/`. After clipping an article, use "Download attachments for current file" to save images locally.
+
+**How often should I lint?**
+After every 10 ingests or monthly — whichever comes first. Also run it before any major query or synthesis work.
+
 ## Based On
 
 - [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)

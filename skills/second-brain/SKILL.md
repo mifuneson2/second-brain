@@ -145,3 +145,12 @@ These files are bundled with this skill and available at `<skill-directory>/refe
 - `agent-configs/codex.md` — AGENTS.md template
 - `agent-configs/cursor.md` — Cursor rules template
 - `agent-configs/gemini.md` — GEMINI.md template
+
+## Next Steps
+
+After setup is complete, the user's workflow is:
+
+1. **Clip articles** to `raw/` using the Obsidian Web Clipper
+2. **Ingest sources** with `/second-brain-ingest` — processes raw files into wiki pages
+3. **Ask questions** with `/second-brain-query` — searches and synthesizes from the wiki
+4. **Health-check** with `/second-brain-lint` — run after every 10 ingests or monthly

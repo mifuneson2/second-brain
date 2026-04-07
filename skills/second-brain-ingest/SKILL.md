@@ -123,3 +123,10 @@ Tell the user what was done:
 - When new information contradicts existing wiki content, **update the wiki page and note the contradiction** with both sources cited.
 - **Prefer updating existing pages** over creating new ones. Only create a new page when the topic is distinct enough to warrant its own page.
 - Use `[[wikilinks]]` for all internal references. Never use raw file paths.
+
+## What's Next
+
+After ingesting sources, the user can:
+- **Ask questions** with `/second-brain-query` to explore what was ingested
+- **Ingest more sources** — clip another article and run `/second-brain-ingest` again
+- **Health-check** with `/second-brain-lint` after every 10 ingests to catch gaps

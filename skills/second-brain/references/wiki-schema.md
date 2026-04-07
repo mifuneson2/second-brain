@@ -89,6 +89,36 @@ Each entry in `wiki/log.md`:
     ## [YYYY-MM-DD] operation | Title
     Brief description of what was done.
 
+## Page Naming
+
+Filenames use **kebab-case** with `.md` extension. Page titles inside the file use **Title Case**.
+
+- Source pages: `wiki/sources/article-title-here.md` → `# Article Title Here`
+- Entity pages: `wiki/entities/entity-name.md` → `# Entity Name`
+- Concept pages: `wiki/concepts/concept-name.md` → `# Concept Name`
+- Synthesis pages: `wiki/synthesis/comparison-topic.md` → `# Comparison Topic`
+
+When creating `[[wikilinks]]`, use the page title (Title Case), not the filename:
+- Correct: `[[Entity Name]]`
+- Wrong: `[[entity-name]]`
+
+To slugify a title into a filename: lowercase, replace spaces with hyphens, remove special characters, trim to reasonable length.
+
+## Image Handling
+
+Web-clipped articles often include images. Handle them as follows:
+
+1. **Download images locally.** In Obsidian Settings → Files and links, set "Attachment folder path" to `raw/assets/`. Then use "Download attachments for current file" (bind it to a hotkey like Ctrl+Shift+D) after clipping an article.
+2. **Reference images from wiki pages** using standard markdown: `![description](../raw/assets/image-name.png)`. Keep the image in `raw/assets/` — never copy images into `wiki/`.
+3. **During ingestion**, note any images in the source. If an image contains important information (diagrams, charts, data), describe its contents in the wiki page so the knowledge is captured in text form.
+
+## Lint Frequency
+
+Run a lint pass (`/second-brain-lint`) on this schedule:
+- **After every 10 ingests** — catches cross-reference gaps while they're fresh
+- **Monthly at minimum** — catches stale claims and orphan pages that accumulate over time
+- **Before any major query or synthesis** — ensures the wiki is healthy before you rely on it for analysis
+
 ## Tools
 
 You have access to these CLI tools — use them when appropriate:

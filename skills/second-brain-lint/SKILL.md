@@ -110,3 +110,14 @@ Append to `wiki/log.md`:
 
     ## [YYYY-MM-DD] lint | Health check
     Found N errors, N warnings, N info items. Fixed: [list of fixes applied].
+
+## When to Lint
+
+- **After every 10 ingests** — catches cross-reference gaps while they're fresh
+- **Monthly at minimum** — catches stale claims and orphan pages over time
+- **Before major queries** — ensures the wiki is healthy before you rely on it for analysis
+
+## Related Skills
+
+- `/second-brain-ingest` — process new sources into wiki pages
+- `/second-brain-query` — ask questions against the wiki

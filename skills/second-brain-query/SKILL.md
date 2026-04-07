@@ -69,3 +69,8 @@ If the user agrees:
 - **Cite your sources.** Every factual claim should link to the wiki page it came from.
 - **Valuable answers compound.** Encourage saving good analyses back into the wiki.
 - Use `[[wikilinks]]` for all internal references. Never use raw file paths.
+
+## Related Skills
+
+- `/second-brain-ingest` — process new sources into wiki pages
+- `/second-brain-lint` — health-check the wiki for issues

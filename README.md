@@ -6,7 +6,7 @@ An LLM-maintained personal knowledge base built on the [LLM Wiki pattern](https:
 
 ## How It Works
 
-You feed raw material (articles, papers, notes, transcripts) into a `raw/` folder. The LLM reads everything, writes structured wiki pages, creates cross-references, and maintains an index. You browse the results in Obsidian — following links, exploring the graph view, and asking questions.
+You feed raw material (articles, papers, notes, transcripts) into a `Clippings/` folder (named to match the Obsidian Web Clipper default). The LLM reads everything, writes structured wiki pages, creates cross-references, and maintains an index. You browse the results in Obsidian — following links, exploring the graph view, and asking questions.
 
 The LLM is the librarian. You're the curator.
 
@@ -35,9 +35,9 @@ This installs four skills into your AI agent (Claude Code, Codex, Cursor, Gemini
 
 1. **Install the skills** (see above)
 2. **Run the wizard:** type `/second-brain` in your AI agent — it walks you through naming, location, domain, and tooling
-3. **Install Web Clipper:** [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf) — configure it to save to your vault's `raw/` folder
+3. **Install Web Clipper:** [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf) — configure it to save to your vault's `Clippings/` folder
 4. **Open in Obsidian** — launch Obsidian, choose "Open folder as vault", select your vault folder
-5. **Clip your first article** to `raw/`, then run `/second-brain-ingest` — the LLM will discuss key takeaways and build wiki pages
+5. **Clip your first article** to `Clippings/`, then run `/second-brain-ingest` — the LLM will discuss key takeaways and build wiki pages
 6. **Browse your wiki** in Obsidian — follow `[[wikilinks]]`, explore the graph view, check `wiki/index.md`
 7. **Keep going** — `/second-brain-query` to ask questions, `/second-brain-lint` to health-check
 
@@ -45,7 +45,7 @@ This installs four skills into your AI agent (Claude Code, Codex, Cursor, Gemini
 
 ```
 your-vault/
-├── raw/                    # Your inbox — drop sources here
+├── Clippings/              # Your inbox — drop sources here (Obsidian Web Clipper default)
 │   └── assets/             # Images and attachments
 ├── wiki/                   # LLM-maintained wiki
 │   ├── sources/            # One summary per ingested source
@@ -71,7 +71,7 @@ The wizard offers to install these. All optional but recommended:
 **The wizard failed or I need to re-run setup.**
 Run `/second-brain` again — the onboarding script is idempotent. It won't overwrite existing files, so your data is safe. If you need a fresh start, delete the vault folder and re-run.
 
-**I accidentally modified a file in `raw/`.**
+**I accidentally modified a file in `Clippings/`.**
 That's OK. The wiki was built from the original content. If you need the original back, check your git history (if the vault is a git repo) or re-clip the source. The wiki pages are unaffected.
 
 **`wiki/index.md` is out of sync with actual pages.**
@@ -87,7 +87,7 @@ Install `qmd` (`npm i -g @tobilu/qmd`). The query skill uses it automatically wh
 Yes. The wizard generates config files for each agent you select. They all follow the same wiki schema, so multiple agents can work on the same vault.
 
 **How do I handle images in clipped articles?**
-In Obsidian, set Settings → Files and links → Attachment folder path to `raw/assets/`. After clipping an article, use "Download attachments for current file" to save images locally.
+In Obsidian, set Settings → Files and links → Attachment folder path to `Clippings/assets/`. After clipping an article, use "Download attachments for current file" to save images locally.
 
 **How often should I lint?**
 After every 10 ingests or monthly — whichever comes first. Also run it before any major query or synthesis work.

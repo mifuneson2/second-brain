@@ -13,7 +13,7 @@ echo "=== Second Brain Onboarding ===" >&2
 
 # 1. Create directory structure
 echo "Creating directory structure..." >&2
-mkdir -p "$VAULT_ROOT/raw/assets"
+mkdir -p "$VAULT_ROOT/Clippings/assets"
 mkdir -p "$VAULT_ROOT/wiki/sources"
 mkdir -p "$VAULT_ROOT/wiki/entities"
 mkdir -p "$VAULT_ROOT/wiki/concepts"
@@ -94,8 +94,8 @@ cat << JSONEOF
   "status": "complete",
   "vault_root": "$VAULT_ABS",
   "directories": [
-    "raw/",
-    "raw/assets/",
+    "Clippings/",
+    "Clippings/assets/",
     "wiki/",
     "wiki/sources/",
     "wiki/entities/",

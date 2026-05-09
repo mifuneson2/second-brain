@@ -6,10 +6,10 @@ CLI tools that extend the LLM's capabilities when working with a second-brain va
 
 ### Obsidian Web Clipper
 
-Browser extension that saves web articles as clean markdown files directly into your vault's `raw/` directory.
+Browser extension that saves web articles as clean markdown files directly into your vault's `Clippings/` directory.
 
 - **Install:** Chrome Web Store — https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf
-- **Setup:** After installing, configure the default vault location to point to your vault's `raw/` directory
+- **Setup:** After installing, configure the default vault location to point to your vault's `Clippings/` directory
 - **Why required:** This is the primary way to feed source material into the vault without manual copy-paste
 
 ## Optional (Recommended)

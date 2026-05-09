@@ -34,7 +34,7 @@ Read the wiki pages identified by the index or search. Follow `[[wikilinks]]` to
 
 ### 4. Check raw sources if needed
 
-If the wiki pages don't fully answer the question, check relevant source summaries in `wiki/sources/` for additional detail. Only go to files in `raw/` as a last resort.
+If the wiki pages don't fully answer the question, check relevant source summaries in `wiki/sources/` for additional detail. Only go to files in `Clippings/` as a last resort.
 
 ## Synthesize the Answer
 

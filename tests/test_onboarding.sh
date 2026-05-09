@@ -55,8 +55,8 @@ echo ""
 echo "Test 1: Fresh vault scaffolding"
 bash "$ONBOARDING" "$TEST_VAULT" 2>/dev/null
 
-assert_dir "$TEST_VAULT/raw"
-assert_dir "$TEST_VAULT/raw/assets"
+assert_dir "$TEST_VAULT/Clippings"
+assert_dir "$TEST_VAULT/Clippings/assets"
 assert_dir "$TEST_VAULT/wiki"
 assert_dir "$TEST_VAULT/wiki/sources"
 assert_dir "$TEST_VAULT/wiki/entities"

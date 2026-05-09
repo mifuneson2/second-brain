@@ -16,8 +16,8 @@ A few days later he extended the theory to include a pattern via an idea file th
 
 You end up with three folders:
 
-- **raw/** is your inbox. Articles, papers, notes, transcripts — you dump them here and never think about organizing them.
-- **wiki/** is what the LLM builds for you. It reads everything in raw, writes articles, creates topic folders, links concepts together, and maintains an index. You barely touch this folder.
+- **Clippings/** is your inbox. Articles, papers, notes, transcripts — you dump them here and never think about organizing them. Named to match the Obsidian Web Clipper default folder.
+- **wiki/** is what the LLM builds for you. It reads everything in Clippings/, writes articles, creates topic folders, links concepts together, and maintains an index. You barely touch this folder.
 - **output/** is where reports and query results go.
 
 Once it's running, you can ask the LLM questions against your wiki and it'll navigate the files, pull in the relevant material, and answer. No fancy RAG setup needed — just markdown files and a good prompt.
@@ -37,7 +37,7 @@ The magic is in the agent config file (CLAUDE.md, AGENTS.md, etc.) at the root o
 - Cursor → `.cursor/rules/*.mdc`
 - Gemini CLI → `GEMINI.md`
 
-**Obsidian Web Clipper** — a browser extension that saves web articles as clean markdown files directly into your vault's `raw/` folder. This is the primary way to feed source material in.
+**Obsidian Web Clipper** — a browser extension that saves web articles as clean markdown files directly into your vault's `Clippings/` folder. This is the primary way to feed source material in.
 > https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf
 
 ---
@@ -46,7 +46,7 @@ The magic is in the agent config file (CLAUDE.md, AGENTS.md, etc.) at the root o
 
 Whether you build this yourself or use our skills, the system has four operations:
 
-**Onboarding** — scaffold the vault structure and generate the agent config file. Create `raw/`, `wiki/` (with subdirectories for sources, entities, concepts, synthesis), and `output/`. Bootstrap `wiki/index.md` and `wiki/log.md`.
+**Onboarding** — scaffold the vault structure and generate the agent config file. Create `Clippings/`, `wiki/` (with subdirectories for sources, entities, concepts, synthesis), and `output/`. Bootstrap `wiki/index.md` and `wiki/log.md`.
 
 **Ingest** — process a raw source into wiki pages. Read the source, create a summary in `wiki/sources/`, create or update entity and concept pages, add wikilinks between related pages, update the index and log. A single source typically touches 10-15 wiki pages.
 
@@ -60,10 +60,10 @@ Whether you build this yourself or use our skills, the system has four operation
 
 The agent config is the brain of the system. It tells the LLM exactly how to behave. The key sections:
 
-- **Architecture** — three directories (raw, wiki, output), wiki subdirectories (sources, entities, concepts, synthesis), two special files (index.md, log.md)
+- **Architecture** — three directories (Clippings, wiki, output), wiki subdirectories (sources, entities, concepts, synthesis), two special files (index.md, log.md)
 - **Page format** — YAML frontmatter (tags, sources, created, updated) + wikilink syntax
 - **Operations** — step-by-step workflows for ingest, query, and lint
-- **Rules** — 10 rules governing the LLM's behavior (never modify raw, always update index, etc.)
+- **Rules** — 10 rules governing the LLM's behavior (never modify Clippings/, always update index, etc.)
 
 You can write this by hand (see `llm-wiki.md` for the conceptual foundation) or let our onboarding wizard generate it. The canonical rules live in `skills/second-brain/references/wiki-schema.md`.
 
@@ -104,7 +104,7 @@ Karpathy's pattern: dump raw sources, let the LLM compile a wiki, browse it in O
 
 | Concept | Implementation |
 |---|---|
-| "Dump raw sources" | `raw/` directory + Obsidian Web Clipper |
+| "Dump raw sources" | `Clippings/` directory + Obsidian Web Clipper |
 | "LLM compiles a wiki" | Ingest operation — reads sources, creates/updates wiki pages, maintains index and log |
 | "Browse in Obsidian" | Obsidian reads `wiki/` with backlinks and graph view |
 | "Ask questions" | Query operation — searches wiki, synthesizes answers with citations |

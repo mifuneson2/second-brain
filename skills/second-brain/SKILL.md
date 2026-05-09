@@ -133,7 +133,7 @@ Show the user:
 2. **Required next step** — install the Obsidian Web Clipper browser extension:
    > Install the Obsidian Web Clipper to easily save web articles into your vault:
    > https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf
-3. **How to start** — open the vault folder in Obsidian, clip an article to `raw/`, then run `/second-brain-ingest`
+3. **How to start** — open the vault folder in Obsidian, clip an article to `Clippings/`, then run `/second-brain-ingest`
 
 ## Reference Files
 
@@ -150,7 +150,7 @@ These files are bundled with this skill and available at `<skill-directory>/refe
 
 After setup is complete, the user's workflow is:
 
-1. **Clip articles** to `raw/` using the Obsidian Web Clipper
+1. **Clip articles** to `Clippings/` using the Obsidian Web Clipper
 2. **Ingest sources** with `/second-brain-ingest` — processes raw files into wiki pages
 3. **Ask questions** with `/second-brain-query` — searches and synthesizes from the wiki
 4. **Health-check** with `/second-brain-lint` — run after every 10 ingests or monthly

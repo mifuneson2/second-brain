@@ -40,3 +40,6 @@ credentials*
 .windsurf/
 .zencoder/
 skills-lock.json
+
+# Build artifacts (.skill packages produced for Claude Desktop upload)
+dist/

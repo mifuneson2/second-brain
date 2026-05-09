@@ -22,12 +22,14 @@ The LLM is the librarian. You're the curator.
 npx skills add NicholasSpisak/second-brain
 ```
 
-This installs four skills into your AI agent (Claude Code, Codex, Cursor, Gemini CLI, and 40+ others):
+This installs six skills into your AI agent (Claude Code, Codex, Cursor, Gemini CLI, and 40+ others):
 
 | Skill | What it does |
 |---|---|
 | `/second-brain` | Set up a new vault (guided wizard) |
-| `/second-brain-ingest` | Process raw sources into wiki pages |
+| `/second-brain-ingest` | Process new clippings into wiki pages (interactive) |
+| `/second-brain-ingest-auto` | Same, but non-interactive — for scheduled / unattended runs |
+| `/second-brain-rollback` | Review an auto-ingest run and undo bad calls / promote rules |
 | `/second-brain-query` | Ask questions against your wiki |
 | `/second-brain-lint` | Health-check the wiki |
 
@@ -40,6 +42,22 @@ This installs four skills into your AI agent (Claude Code, Codex, Cursor, Gemini
 5. **Clip your first article** to `Clippings/`, then run `/second-brain-ingest` — the LLM will discuss key takeaways and build wiki pages
 6. **Browse your wiki** in Obsidian — follow `[[wikilinks]]`, explore the graph view, check `wiki/index.md`
 7. **Keep going** — `/second-brain-query` to ask questions, `/second-brain-lint` to health-check
+
+## Scheduled Ingest (Optional)
+
+If you clip articles throughout the day and want them ingested overnight without manual prompting, schedule `/second-brain-ingest-auto` as a nightly routine.
+
+The auto skill is non-interactive: it applies aggressive defaults to every ambiguous decision (fuzzy-match merges, must-create vs strip stubs, derived titles), logs each call to `output/decisions-{date}.json`, and produces a markdown review file (`output/auto-ingest-review-{date}.md`) for your morning review. Tick boxes in the review file to roll back wrong calls and promote good defaults into a permanent policy file the skill reads on every future run — so it gets better over time.
+
+A typical setup in Claude Code:
+
+```
+/schedule "Every night at 3am, in ~/Obsidian-s/second-brain, run /second-brain-ingest-auto"
+```
+
+In the morning, open `output/auto-ingest-review-{today}.md` in Obsidian, tick the rollback checkboxes for any wrong calls and the policy checkboxes for rules you want enforced going forward, then run `/second-brain-rollback`. Done.
+
+Use `/second-brain-ingest` (without `-auto`) when you're at the keyboard and want to discuss takeaways or confirm fuzzy-match decisions live.
 
 ## What You Get
 

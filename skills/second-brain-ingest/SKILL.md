@@ -27,14 +27,20 @@ Determine which files need ingestion:
 
 For each source file, follow this workflow:
 
-### 0. Identify the canonical title
+### 0. Identify the canonical title and slug
 
-Before reading the body, capture the canonical title that will become the H1, the `aliases:` value, and the text inside every `[[wikilink]]` pointing to this source. Wikilink resolution depends on this string staying consistent across every page in this ingest, so lock it in early.
+Before reading the body, capture two strings that must stay consistent across every page in this ingest:
+
+- **The canonical title** — what goes in the H1 and the `aliases:` value, and what appears on the right side of every piped wikilink pointing to this source.
+- **The slug** — the kebab-case filename (without `.md`) and what appears on the left side of every piped wikilink pointing to this source.
+
+Lock both in early.
 
 1. Open the source file. Find the first H1 (a line starting with `# `). That H1 is the canonical title — the Obsidian Web Clipper preserves the article's real title there.
 2. Apply Character Normalization (see the Character Normalization section of your agent config (CLAUDE.md / AGENTS.md / equivalent at the vault root)): substitute curly quotes (`'` `"` `"`) to straight (`'` `"`); preserve em-dashes `—` and ampersands `&` verbatim; drop `/`, `|`, `[`, `]`, `#` if present.
 3. If the file has no H1, derive a title by reverse-slugifying the filename (replace `_` and `-` with spaces, drop the `.md` extension, apply title case) and ask the user to confirm before proceeding.
-4. Hold this normalized title in working memory. Steps 3, 5, and 9 must use it byte-for-byte — every H1, alias, and wikilink referencing this source must match exactly.
+4. Derive the slug from the normalized title using the slugification rule in your agent config (lowercase → whitespace to `-` → `&` to `and` → em/en-dash to `-` → drop chars outside `[a-z0-9-]` → collapse `-` → trim → truncate to 80 chars at a word boundary).
+5. Hold both the title and the slug in working memory. Steps 3, 5, and 9 must use them byte-for-byte — every H1, alias, and `[[slug|Title]]` wikilink referencing this source must match exactly.
 
 ### 1. Read the source completely
 
@@ -62,7 +68,7 @@ Create a new file in `wiki/sources/` named after the source (slugified). The fil
     **Date ingested:** YYYY-MM-DD
     **Type:** article | paper | transcript | notes | etc.
 
-**`aliases:` must equal the H1 byte-for-byte.** This is what makes `[[Source Title]]` wikilinks resolve to the kebab-slug file. Without an exact-match alias, Obsidian cannot find the file and creates an empty duplicate at the vault root. Apply Character Normalization (see your agent config's Character Normalization section) to both the H1 and the alias — straight quotes, preserved em-dashes/ampersands, dropped `/ | [ ] #`.
+**`aliases:` must equal the H1 byte-for-byte.** The alias is kept for Obsidian Quick Switcher discoverability — it is **not** used for wikilink resolution. Wikilink resolution depends on the **slug filename + the piped form** (see step 9). Apply Character Normalization (see your agent config's Character Normalization section) to both the H1 and the alias — straight quotes, preserved em-dashes/ampersands, dropped `/ | [ ] #`.
 
 **YAML quoting when the title contains `"`**: wrap the alias value in single quotes so YAML doesn't fail to parse:
 - ✅ Correct: `aliases: ['Dario Amodei — "We Are Near The End Of The Exponential"']`
@@ -146,8 +152,9 @@ Before finalizing the ingest, verify every `[[wikilink]]` written or touched in 
 
 2. **Resolve** each unique link. A wikilink resolves if and only if **one** of the following is true:
    - A file exists at `wiki/entities/<text>.md`, `wiki/concepts/<text>.md`, or `wiki/synthesis/<text>.md` whose H1 matches `<text>` byte-for-byte.
-   - Some page in `wiki/` has an `aliases:` frontmatter entry that matches `<text>` byte-for-byte.
-   - The link uses explicit slug syntax (`[[slug|Display]]`) and `wiki/sources/slug.md` exists.
+   - The link uses explicit slug syntax (`[[slug|Display]]`) and `wiki/sources/<slug>.md` or `wiki/personal/<slug>.md` exists.
+
+   Note: do **not** rely on alias-based resolution. The `aliases:` frontmatter field is kept for Quick Switcher discoverability, but Obsidian's indexer is unreliable here — every link to a source page must use the piped `[[slug|Title]]` form.
 
 3. **Classify** each unresolved link:
    - **Must-create** — the link refers to an entity or concept the source clearly emphasizes (named in a section heading, discussed at length, or central to the source's claims). Create a stub page in the appropriate subdirectory with frontmatter, an H1 that matches the wikilink byte-for-byte, and a one-line description noting it was created as a stub during this ingest.
@@ -170,10 +177,10 @@ The canonical rules for filenames, character normalization, and wikilink resolut
 
 The two rules that account for nearly all broken links you'll encounter:
 
-1. **Exact-match resolution.** Every `[[wikilink]]` must match either a filename (entity/concept/synthesis pages) or an `aliases:` value (source pages) **byte-for-byte** — including capitalization, straight-vs-curly quotes, em-dashes, and ampersands. Step 9 validates this before declaring done.
-2. **Source page link style.** Source-page filenames are kebab-case, but you never link by slug. Always link via the H1 (which the alias mirrors): `[[How to Build Agentic Pipelines (It's Simpler Than You Think)]]`, not `[[ben-fellows-how-to-build-pipelines]]`. The pipe form `[[slug|Display Text]]` is allowed when you need a different display text but otherwise unnecessary.
+1. **Exact-match resolution.** Every `[[wikilink]]` must match a **filename** byte-for-byte — including capitalization, straight-vs-curly quotes, em-dashes, and ampersands. For entity/concept/synthesis pages the match is against the filename directly; for source pages the match is against the slug filename on the left side of a piped wikilink. Step 9 validates this before declaring done.
+2. **Source page link style.** Source-page filenames are kebab-case. Always use the piped form: `[[ben-fellows-how-to-build-pipelines|How to Build Agentic Pipelines (It's Simpler Than You Think)]]`. Never use the bare-alias form `[[How to Build Agentic Pipelines (It's Simpler Than You Think)]]` — Obsidian's alias resolution is unreliable in this vault and the bare form silently produces stub pages on click.
 
-When you add a `## Sources` section to an entity or concept page, list each source by its H1 title as the wikilink — same rule as above.
+When you add a `## Sources` section to an entity or concept page, list each source using the piped form — slug on the left, full title on the right.
 
 ## What's Next
 

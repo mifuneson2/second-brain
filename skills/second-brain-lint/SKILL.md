@@ -24,7 +24,9 @@ Scan all wiki pages for `[[wikilink]]` references. For each link, verify the tar
 grep -roh '\[\[[^]]*\]\]' wiki/ | sort -u
 ```
 
-Cross-reference against actual files in `wiki/`.
+For each unique wikilink, extract the link target (the text before `|` if the link uses the piped form `[[target|Display]]`, otherwise the full inner text). Cross-reference each target against the **filename** of an existing page in `wiki/entities/`, `wiki/concepts/`, `wiki/synthesis/`, `wiki/personal/`, or `wiki/sources/`.
+
+**Do not** treat alias-only links as resolved. Per this vault's convention (see your agent config's *Page Naming* section), every source-page wikilink must use the piped form `[[slug|Display Title]]`. A bare-alias link such as `[[Exact Article Title Here]]` is a bug — flag it as a broken link even if a matching `aliases:` value exists in some source-page frontmatter, because Obsidian's alias resolution is unreliable here.
 
 ### 2. Orphan pages
 

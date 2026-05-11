@@ -91,18 +91,18 @@ Each entry in `wiki/log.md`:
 
 ## Page Naming
 
-Two different conventions apply, depending on page type. Each convention is chosen so that `[[wikilinks]]` resolve **without an alias lookup whenever possible** — and where an alias is required (source pages), the rules below force exact-match aliases so resolution can't drift.
+Two different conventions apply, depending on page type. Both are chosen so that `[[wikilinks]]` resolve **directly to a filename** — Obsidian's alias resolution is not reliable enough to depend on (when tested in May 2026 it intermittently failed to index `aliases:` frontmatter for source-page resolution; Cmd+click on alias-only wikilinks created stub files instead of navigating to the target).
 
 ### Source pages (`wiki/sources/`)
 
-Imported from external clippings (Obsidian Web Clipper, manual paste, etc.). The clipping filename is unfriendly (long, contains spaces, smart quotes, em-dashes), so source pages use a **slugified kebab-case filename + an `aliases:` field that matches the H1 byte-for-byte**.
+Imported from external clippings (Obsidian Web Clipper, manual paste, etc.). The clipping filename is unfriendly (long, contains spaces, smart quotes, em-dashes), so source pages use a **slugified kebab-case filename + a piped wikilink form** that pairs the slug filename with a human-readable display title.
 
 - Filename: `wiki/sources/article-title-here.md`
 - H1: `# Exact Article Title Here` (matches the original article title verbatim — preserves capitalization, em-dashes, ampersands)
-- `aliases:` frontmatter: `["Exact Article Title Here"]` — must match the H1 byte-for-byte (see Character Normalization below)
-- Wikilinks point to the alias: `[[Exact Article Title Here]]` — never `[[article-title-here]]`
+- `aliases:` frontmatter: `["Exact Article Title Here"]` — kept as documentation and to assist the Obsidian Quick Switcher, but **not relied on for wikilink resolution**
+- **Wikilinks always use the piped form:** `[[article-title-here|Exact Article Title Here]]` — the slug on the left guarantees resolution to the file, the title on the right is what readers see in reading view
 
-The alias is what makes the wikilink resolve. Without it Obsidian creates an empty duplicate page at the vault root.
+Never use the bare-alias form `[[Exact Article Title Here]]` — Obsidian may fail to resolve it and silently create an empty stub page at the vault root.
 
 ### Entity, concept, and synthesis pages
 
@@ -152,9 +152,9 @@ These rules are the single source of truth. Every skill that reads, writes, or l
 
 ### Capitalization (most common cause of broken links)
 
-- The `aliases:` field must match the H1 **byte-for-byte** — every character, including case, punctuation, and whitespace.
-- Every `[[wikilink]]` must match the alias (or, for entity/concept/synthesis pages, the filename) **byte-for-byte**.
-- Never paraphrase, never recapitalize, never re-spell. If you mention `[[Dylan Patel — Deep Dive on TPU vs. Nvidia]]` in one page, every other page must use that exact string. "Deep dive" with a lowercase `d` will not resolve.
+- The `aliases:` field must match the H1 **byte-for-byte** — every character, including case, punctuation, and whitespace. (The alias documents the canonical title; it does not resolve wikilinks. See *Page Naming*.)
+- Every `[[wikilink]]` must match a **filename** byte-for-byte: the entity/concept/synthesis filename directly, or the slug on the left side of a piped `[[slug|Title]]` link for source pages.
+- Never paraphrase, never recapitalize, never re-spell. If a source page is `dylan-patel-deep-dive-tpu-vs-nvidia.md`, every link to it must be `[[dylan-patel-deep-dive-tpu-vs-nvidia|Dylan Patel — Deep Dive on TPU vs. Nvidia]]` — same slug, same display title, everywhere.
 
 ### Last-resort filename mangling (third tier)
 
